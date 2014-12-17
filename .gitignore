@@ -1,3 +1,8 @@
+# Intellij
+.idea/
+*.iml
+*.iws
+
 # Logs
 logs
 *.log
@@ -26,3 +31,12 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+#general swap/backup files
+*.so
+*.log
+*.out
+*~
+*.swp
+*.DS_Store
+*.lock
