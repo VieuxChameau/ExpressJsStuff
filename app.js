@@ -14,6 +14,11 @@ var cities = {
 	'Flotilla': 'Bustling urban oasis'
 };
 
+app.param('name', function(request, response, next){
+	request.cityName = parseCityName(request.params.name);
+	next();
+});
+
 // citites?search=Paradise
 app.get('/cities', function(request, response){
 	if (request.query.search) {
@@ -23,7 +28,7 @@ app.get('/cities', function(request, response){
 });
 
 app.get('/cities/:name', function (request, response) {
-	var cityInfo = cities[request.params.name];
+	var cityInfo = cities[request.cityName];
 	if (cityInfo){
 		response.json(cityInfo);
 	} else {
@@ -36,10 +41,16 @@ app.get('/locations', function (request, response) {
 });
 
 function citySearch (keyword) {
-	var regexp = RegExp(keyword, 'i');
-	return cities.filter(function (city) {
-		return city.match(regexp);
-	});
+	for (var city in cities) {
+		if (city == keyword) {
+			return cities[keyword];
+		}
+	}
+	return null;
+}
+
+function parseCityName(name){
+	return name[0].toUpperCase() + name.slice(1).toLowerCase();
 }
 
 app.listen(3001, function () {
