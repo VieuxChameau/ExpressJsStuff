@@ -1,9 +1,14 @@
 var express = require('express');
 var app = express();
 var logger = require('./logger');
+var bodyParser = require('body-parser');
+
+
+var parseUrlencoded = bodyParser.urlencoded({ extended: false });
 
 app.use(express.static('public'));
 
+// Use of logger middleware
 app.use(logger);
 
 var cities = {
@@ -39,6 +44,22 @@ app.get('/cities/:name', function (request, response) {
 app.get('/locations', function (request, response) {
 	response.redirect(301, '/cities');
 });
+
+
+app.post('/cities', parseUrlencoded, function (request, response) {
+	var description = request.body.description;
+	if (description.length > 4){
+		var city = createCity(request.body.name, description);
+		response.status(201).json(city);
+	} else {
+		response.status(400).json('Invalid City');
+	}
+});
+
+var createCity = function(name, description){
+	cities[name] = description;
+	return name;
+};
 
 function citySearch (keyword) {
 	for (var city in cities) {
