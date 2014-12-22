@@ -22,9 +22,10 @@ curl -i "http://localhost:3001/cities?search=Indigo"
 curl -i "http://localhost:3001/cities/Indigo"
 ```
 
-```
+```bash
 curl -i --data "name=nameValue&description=descriptionValue" "http://localhost:3001/cities"
 ```
 
-```
+```bash
+curl --request DELETE "http://localhost:3001/cities/Indigo"
 ```

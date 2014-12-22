@@ -56,6 +56,15 @@ app.post('/cities', parseUrlencoded, function (request, response) {
 	}
 });
 
+app.delete('/cities/:name', function (request, response){
+	if (cities[request.cityName]){
+		delete cities[request.cityName];
+		response.sendStatus(200);
+	} else {
+		response.sendStatus(404);
+	}
+});
+
 var createCity = function(name, description){
 	cities[name] = description;
 	return name;

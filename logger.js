@@ -6,7 +6,7 @@ module.exports = function (request, response, next) {
 	response.on('finish', function () {
 		var endTime = +new Date();
 		duration = endTime - startTime;
-		stream.write("This request took " + duration + " ms");
+		stream.write("This request took " + duration + " ms\n");
 	});
 
 	next();
